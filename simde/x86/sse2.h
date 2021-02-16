@@ -411,9 +411,7 @@ SIMDE_FUNCTION_ATTRIBUTES
 simde__m128d
 simde_x_mm_abs_pd(simde__m128d a) {
   #if defined(SIMDE_X86_SSE2_NATIVE)
-    union { uint64_t u64; double f64; } u_;
-    u_.u64 = UINT64_C(0x7FFFFFFFFFFFFFFF);
-    return _mm_and_pd(_mm_set1_pd(u_.f64), a);
+    return _mm_and_pd(_mm_castsi128_pd(_mm_set1_epi64x(INT64_MAX)), a);
   #else
     simde__m128d_private
       r_,
